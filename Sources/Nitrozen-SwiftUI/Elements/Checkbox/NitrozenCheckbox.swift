@@ -55,7 +55,7 @@ public struct NitrozenCheckbox<Element>: View where Element: NitrozenElementStri
 		NitrozenCheckboxItem(
 			isSelected: selection.contains(item),
 			title: item.selectionTitle,
-            subTitle: "",
+            subTitle: nil,
 			width: width,
 			appearance: self.appearance
 		)
@@ -167,8 +167,8 @@ public struct NitrozenCheckboxItem: View {
                                 .foregroundColor(self.appearance.selectedBorderColor)
                         }
                         .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                        .opacity(0)
                     }
-                    .opacity(0)
                     
                     self.subTitle.convertToView { subTitle in
                         titleView(title: subTitle, font: self.appearance.selectedTitle.font, color: self.appearance.selectedTitle.titleColor)
@@ -181,18 +181,35 @@ public struct NitrozenCheckboxItem: View {
 	
 	@ViewBuilder
 	func deSelectedView() -> some View {
-		HStack {
-			Group {
-				RoundedRectangle(cornerRadius: 4, style: .continuous)
-					.stroke(self.appearance.deSelectedBorderColor, lineWidth: self.appearance.deselectedBorderWidth)
-			}
-			.frame(width: self.appearance.size.width, height: self.appearance.size.height)
-			
-			
-			self.title.convertToView { title in
-				AnyView(titleView(title: title, font: self.appearance.deSelectedTitle.font, color: self.appearance.deSelectedTitle.titleColor))
-			}
-		}
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Group {
+                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                        .stroke(self.appearance.deSelectedBorderColor, lineWidth: self.appearance.deselectedBorderWidth)
+                }
+                .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                
+                
+                self.title.convertToView { title in
+                    AnyView(titleView(title: title, font: self.appearance.deSelectedTitle.font, color: self.appearance.deSelectedTitle.titleColor))
+                }
+            }
+            if subTitle != nil {
+                HStack {
+                    Group {
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .stroke(self.appearance.deSelectedBorderColor, lineWidth: self.appearance.deselectedBorderWidth)
+                    }
+                    .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                    .opacity(0)
+                    
+                    
+                    self.subTitle.convertToView { subTitle in
+                        AnyView(titleView(title: subTitle, font: self.appearance.deSelectedTitle.font, color: self.appearance.deSelectedTitle.titleColor))
+                    }
+                }
+            }
+        }
 	}
 	
 	@ViewBuilder
