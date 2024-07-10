@@ -9,5 +9,4 @@ import Foundation
 
 extension String: NitrozenElementStringSelectableStyle {
     public var selectionTitle: String { return self  }
-    public var selectionSubTitle: String { return self }
 }

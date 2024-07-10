@@ -28,7 +28,6 @@ protocol NitrozenElementLoadingStyle: NitrozenElementStyle {
 //TODO: Rushang -- combine NitrozenElementStringSelectableStyle and NitrozenElementRadioStringSelectableStyle with better naming
 public protocol NitrozenElementStringSelectableStyle {
 	var selectionTitle: String { get }
-    var selectionSubTitle: String { get }
 }
 
 public protocol NitrozenElementRadioStringSelectableStyle {

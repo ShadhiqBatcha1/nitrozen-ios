@@ -55,7 +55,7 @@ public struct NitrozenCheckbox<Element>: View where Element: NitrozenElementStri
 		NitrozenCheckboxItem(
 			isSelected: selection.contains(item),
 			title: item.selectionTitle,
-            subTitle: item.selectionSubTitle,
+            subTitle: "",
 			width: width,
 			appearance: self.appearance
 		)
