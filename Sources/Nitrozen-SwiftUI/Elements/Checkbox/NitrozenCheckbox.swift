@@ -104,7 +104,7 @@ public struct NitrozenCheckboxItem: View {
 	public init(
 		isSelected: Bool,
 		title: String?,
-        subTitle: String?,
+        subTitle: String? = nil,
 		width: Width = .infinity,
 		appearance: NitrozenAppearance.Checkbox? = nil
 	) {
@@ -155,25 +155,26 @@ public struct NitrozenCheckboxItem: View {
                 }
                 
             }
-            
-            HStack {
-                ZStack {
-                    Group {
-                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-                            .stroke(self.appearance.selectedBorderColor, lineWidth: self.appearance.selectedBorderWidth)
-                            .frame(width: self.appearance.size.width, height: self.appearance.size.height)
-                        
-                        self.appearance.selectedImage
-                            .foregroundColor(self.appearance.selectedBorderColor)
+            if subTitle != nil {
+                HStack {
+                    ZStack {
+                        Group {
+                            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                .stroke(self.appearance.selectedBorderColor, lineWidth: self.appearance.selectedBorderWidth)
+                                .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                            
+                            self.appearance.selectedImage
+                                .foregroundColor(self.appearance.selectedBorderColor)
+                        }
+                        .frame(width: self.appearance.size.width, height: self.appearance.size.height)
                     }
-                    .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                    .opacity(0)
+                    
+                    self.subTitle.convertToView { subTitle in
+                        titleView(title: subTitle, font: self.appearance.selectedTitle.font, color: self.appearance.selectedTitle.titleColor)
+                    }
+                    
                 }
-                .opacity(0)
-                
-                self.subTitle.convertToView { subTitle in
-                    titleView(title: subTitle, font: self.appearance.selectedTitle.font, color: self.appearance.selectedTitle.titleColor)
-                }
-                
             }
         }
 	}
