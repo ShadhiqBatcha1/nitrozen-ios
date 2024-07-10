@@ -55,6 +55,7 @@ public struct NitrozenCheckbox<Element>: View where Element: NitrozenElementStri
 		NitrozenCheckboxItem(
 			isSelected: selection.contains(item),
 			title: item.selectionTitle,
+            subTitle: item.selectionSubTitle,
 			width: width,
 			appearance: self.appearance
 		)
@@ -96,17 +97,20 @@ public struct NitrozenCheckboxItem: View {
 	
 	var isSelected: Bool
 	var title: String?
+    var subTitle: String?
 	var width: Width
 	var appearance: NitrozenAppearance.Checkbox
 	
 	public init(
 		isSelected: Bool,
 		title: String?,
+        subTitle: String?,
 		width: Width = .infinity,
 		appearance: NitrozenAppearance.Checkbox? = nil
 	) {
 		self.isSelected = isSelected
 		self.title = title
+        self.subTitle = subTitle
 		self.width = width
 		self.appearance = appearance.or(NitrozenAppearance.shared.checkbox)
 	}
@@ -132,24 +136,46 @@ public struct NitrozenCheckboxItem: View {
 	
 	@ViewBuilder
 	func selectedView() -> some View {
-		HStack {
-			ZStack {
-				Group {
-					RoundedRectangle(cornerRadius: 4, style: .continuous)
-						.stroke(self.appearance.selectedBorderColor, lineWidth: self.appearance.selectedBorderWidth)
-						.frame(width: self.appearance.size.width, height: self.appearance.size.height)
-					
-					self.appearance.selectedImage
-						.foregroundColor(self.appearance.selectedBorderColor)
-				}
-				.frame(width: self.appearance.size.width, height: self.appearance.size.height)
-			}
-			
-			self.title.convertToView { title in
-				titleView(title: title, font: self.appearance.selectedTitle.font, color: self.appearance.selectedTitle.titleColor)
-			}
-			
-		}
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                ZStack {
+                    Group {
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .stroke(self.appearance.selectedBorderColor, lineWidth: self.appearance.selectedBorderWidth)
+                            .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                        
+                        self.appearance.selectedImage
+                            .foregroundColor(self.appearance.selectedBorderColor)
+                    }
+                    .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                }
+                
+                self.title.convertToView { title in
+                    titleView(title: title, font: self.appearance.selectedTitle.font, color: self.appearance.selectedTitle.titleColor)
+                }
+                
+            }
+            
+            HStack {
+                ZStack {
+                    Group {
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .stroke(self.appearance.selectedBorderColor, lineWidth: self.appearance.selectedBorderWidth)
+                            .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                        
+                        self.appearance.selectedImage
+                            .foregroundColor(self.appearance.selectedBorderColor)
+                    }
+                    .frame(width: self.appearance.size.width, height: self.appearance.size.height)
+                }
+                .opacity(0)
+                
+                self.subTitle.convertToView { subTitle in
+                    titleView(title: subTitle, font: self.appearance.selectedTitle.font, color: self.appearance.selectedTitle.titleColor)
+                }
+                
+            }
+        }
 	}
 	
 	@ViewBuilder
