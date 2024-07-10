@@ -137,7 +137,7 @@ public struct NitrozenCheckboxItem: View {
 	@ViewBuilder
 	func selectedView() -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
+            HStack(alignment: .center, spacing: 8) {
                 ZStack {
                     Group {
                         RoundedRectangle(cornerRadius: 4, style: .continuous)
@@ -155,8 +155,8 @@ public struct NitrozenCheckboxItem: View {
                 }
                 
             }
-            if subTitle != nil {
-                HStack {
+            if subTitle != nil && subTitle != "" {
+                HStack(alignment: .center, spacing: 8) {
                     ZStack {
                         Group {
                             RoundedRectangle(cornerRadius: 4, style: .continuous)
@@ -171,7 +171,7 @@ public struct NitrozenCheckboxItem: View {
                     }
                     
                     self.subTitle.convertToView { subTitle in
-                        titleView(title: subTitle, font: self.appearance.selectedTitle.font, color: self.appearance.selectedTitle.titleColor)
+                        titleView(title: subTitle, font: self.appearance.deSelectedTitle.font, color: self.appearance.deSelectedTitle.titleColor)
                     }
                     
                 }
@@ -182,7 +182,7 @@ public struct NitrozenCheckboxItem: View {
 	@ViewBuilder
 	func deSelectedView() -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
+            HStack(alignment: .center, spacing: 8) {
                 Group {
                     RoundedRectangle(cornerRadius: 4, style: .continuous)
                         .stroke(self.appearance.deSelectedBorderColor, lineWidth: self.appearance.deselectedBorderWidth)
@@ -194,8 +194,8 @@ public struct NitrozenCheckboxItem: View {
                     AnyView(titleView(title: title, font: self.appearance.deSelectedTitle.font, color: self.appearance.deSelectedTitle.titleColor))
                 }
             }
-            if subTitle != nil {
-                HStack {
+            if subTitle != nil && subTitle != "" {
+                HStack(alignment: .center, spacing: 8) {
                     Group {
                         RoundedRectangle(cornerRadius: 4, style: .continuous)
                             .stroke(self.appearance.deSelectedBorderColor, lineWidth: self.appearance.deselectedBorderWidth)
